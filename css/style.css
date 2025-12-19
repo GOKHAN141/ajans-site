@@ -448,3 +448,13 @@
 .footer .copyright a:hover {
     color: #FFFFFF;
 }
+.carousel-item {
+  height: 108vh; /* Slider yüksekliği */
+}
+
+.carousel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* ASIL OLAY BU */
+  object-position: center; /* Ortadan kırpar */
+}
