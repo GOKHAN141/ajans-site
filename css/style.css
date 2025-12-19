@@ -458,3 +458,19 @@
   object-fit: cover;      /* ASIL OLAY BU */
   object-position: center; /* Ortadan kırpar */
 }
+
+.hero-section {
+  height: 108vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-start;   /* ALT DEĞİL */
+  padding-top: 160px;        /* ÜSTTEN YOĞUNLUK */
+}
+
+.hero-img {
+  width: 100%;
+  height: 108vh;
+  object-fit: cover;
+}
+
