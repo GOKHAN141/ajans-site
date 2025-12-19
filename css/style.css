@@ -473,4 +473,10 @@
   height: 108vh;
   object-fit: cover;
 }
+.hero-content {
+  position: relative;
+  top: 45%;
+  transform: translateY(-50%);
+}
+
 
