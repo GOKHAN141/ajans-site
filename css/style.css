@@ -480,3 +480,99 @@
 }
 
 
+.reference-slider {
+    position: relative;
+    padding: 60px 80px;
+    background: linear-gradient(90deg, #f1f1f1, #e9e9e9);
+    border-radius: 16px;
+}
+
+.slider-viewport {
+    overflow: hidden;
+}
+
+.slider-track {
+    display: flex;
+    transition: transform 0.6s ease;
+}
+
+.slide {
+    flex: 0 0 20%; /* ⬅️ 5 LOGO */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slide img {
+    max-height: 90px;
+    filter: grayscale(100%);
+    opacity: 0.4;
+    transform: scale(0.9);
+    transition: all 0.4s ease;
+}
+
+/* ORTADAKİ LOGO */
+.slide.active img {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* OKLAR */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    border: none;
+    font-size: 26px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    z-index: 5;
+}
+
+.nav-btn.left { left: 20px; }
+.nav-btn.right { right: 20px; }
+
+
+.slide img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* ORTADAKİ (AKTİF) LOGO */
+
+.nav-btn.left { left: 15px; }
+.nav-btn.right { right: 15px; }
+
+/* Noktalar */
+.dots {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 6px;
+    background: #bbb;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dot.active {
+    background: #333;
+    transform: scale(1.2);
+}
+.nav-item.dropdown .dropdown-toggle {
+    margin-left: 2px;   /* ok ile yazı arası */
+    padding-left: 6px;
+}
+
+
