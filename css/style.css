@@ -588,3 +588,74 @@
 }
 
 
+/* ==========================
+   REFERENCES SLIDER (RESPONSIVE)
+========================== */
+
+.reference-slider {
+    position: relative;
+    overflow: hidden;
+    padding: 40px 60px;
+}
+
+.slider-track {
+    display: flex;
+    will-change: transform;
+}
+
+.slide {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slide img {
+    max-width: 100%;
+    max-height: 90px;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.4;
+    transition: all 0.4s ease;
+}
+
+.slide.active img {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+/* OKLAR */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: none;
+    font-size: 26px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.nav-btn.left { left: 10px; }
+.nav-btn.right { right: 10px; }
+
+/* DOTS */
+.dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background: #ccc;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.dot.active {
+    background: var(--primary);
+}

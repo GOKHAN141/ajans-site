@@ -57,56 +57,80 @@
         ]
     });
 
-    /* ==========================
-       REFERENCES SLIDER (SAFE)
-    ========================== */
+})(jQuery);
+
+document.addEventListener("DOMContentLoaded", function () {
+    const currentPage = window.location.pathname.split("/").pop();
+
+    document.querySelectorAll(".navbar-nav a").forEach(link => {
+        const linkPage = link.getAttribute("href");
+
+        if (linkPage === currentPage) {
+            link.classList.add("active");
+        } else {
+            link.classList.remove("active");
+        }
+    });
+});
+
+/* ==========================
+   REFERENCES SLIDER (RESPONSIVE & SAFE)
+========================== */
 
 $(document).ready(function () {
 
     const $track = $('.slider-track');
     let $slides = $('.slide');
     const $dots = $('.dot');
-
-    const visibleCount = 5;
-    const centerOffset = Math.floor(visibleCount / 2);
     const realCount = $slides.length;
 
-    /* === BAŞA VE SONA KLON EKLE === */
-    for (let i = 0; i < centerOffset; i++) {
-        $track.prepend($slides.eq(realCount - 1 - i).clone());
-        $track.append($slides.eq(i).clone());
+    function getVisibleCount() {
+        if (window.innerWidth < 576) return 1;      // Mobil
+        if (window.innerWidth < 992) return 3;      // Tablet
+        return 5;                                   // Desktop
     }
 
-    $slides = $('.slide'); // yeniden al
+    let visibleCount = getVisibleCount();
+    let centerOffset = Math.floor(visibleCount / 2);
     let currentIndex = centerOffset;
 
-    const slideWidthPercent = 100 / visibleCount;
+    function buildClones() {
+        $track.empty();
+        for (let i = 0; i < realCount; i++) {
+            $track.append($slides.eq(i).clone());
+        }
+        $slides = $track.children();
+
+        for (let i = 0; i < centerOffset; i++) {
+            $track.prepend($slides.eq(realCount - 1 - i).clone());
+            $track.append($slides.eq(i).clone());
+        }
+        $slides = $track.children();
+    }
 
     function updateSlider(animate = true) {
-        if (!animate) {
-            $track.css('transition', 'none');
-        } else {
-            $track.css('transition', 'transform 0.6s ease');
-        }
+        const slideWidth = 100 / visibleCount;
 
-        const offset = (currentIndex - centerOffset) * slideWidthPercent;
-        $track.css('transform', 'translateX(-' + offset + '%)');
+        $('.slide').css('width', slideWidth + '%');
+
+        $track.css('transition', animate ? 'transform 0.6s ease' : 'none');
+        $track.css('transform', `translateX(-${(currentIndex - centerOffset) * slideWidth}%)`);
 
         $slides.removeClass('active');
         $slides.eq(currentIndex).addClass('active');
 
-        const realIndex =
-            (currentIndex - centerOffset + realCount) % realCount;
-
-        $dots.removeClass('active');
-        if ($dots.eq(realIndex).length) {
-            $dots.eq(realIndex).addClass('active');
-        }
+        const realIndex = (currentIndex - centerOffset + realCount) % realCount;
+        $dots.removeClass('active').eq(realIndex).addClass('active');
     }
 
-    updateSlider(false);
+    function rebuild() {
+        visibleCount = getVisibleCount();
+        centerOffset = Math.floor(visibleCount / 2);
+        currentIndex = centerOffset;
+        buildClones();
+        updateSlider(false);
+    }
 
-    /* === OKLAR === */
     window.nextSlide = function () {
         currentIndex++;
         updateSlider();
@@ -131,53 +155,16 @@ $(document).ready(function () {
         }
     };
 
-    /* === DOT TIKLAMA === */
-    window.goSlide = function (index) {
-        currentIndex = index + centerOffset;
+    window.goSlide = function (i) {
+        currentIndex = i + centerOffset;
         updateSlider();
     };
 
-    /* === OTOMATİK === */
-    let autoSlide = setInterval(nextSlide, 1800);
+    let autoSlide = setInterval(nextSlide, 2200);
 
-    /* === DRAG / SWIPE === */
-    let startX = 0;
-    let isDragging = false;
-
-    $track.on('mousedown touchstart', function (e) {
-        isDragging = true;
-        startX = e.pageX || e.originalEvent.touches[0].pageX;
-        clearInterval(autoSlide);
+    $(window).on('resize', function () {
+        rebuild();
     });
 
-    $track.on('mouseup touchend', function (e) {
-        if (!isDragging) return;
-
-        let endX = e.pageX || e.originalEvent.changedTouches[0].pageX;
-        let diff = startX - endX;
-
-        if (diff > 50) nextSlide();
-        else if (diff < -50) prevSlide();
-
-        isDragging = false;
-        autoSlide = setInterval(nextSlide, 1800);
-    });
-
-});
-
-
-})(jQuery);
-
-document.addEventListener("DOMContentLoaded", function () {
-    const currentPage = window.location.pathname.split("/").pop();
-
-    document.querySelectorAll(".navbar-nav a").forEach(link => {
-        const linkPage = link.getAttribute("href");
-
-        if (linkPage === currentPage) {
-            link.classList.add("active");
-        } else {
-            link.classList.remove("active");
-        }
-    });
+    rebuild();
 });
