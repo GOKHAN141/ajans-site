@@ -146,19 +146,6 @@
 }
 
 
-/*** Header ***/
-.carousel-caption {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: rgba(1, 10, 53, .8);
-    z-index: 1;
-}
 
 .carousel-control-prev,
 .carousel-control-next {
@@ -448,8 +435,11 @@
 .footer .copyright a:hover {
     color: #FFFFFF;
 }
+
+/* Sola Sıkışma Çözümü ve Geliştirmeler */
 .carousel-item {
   height: 100vh;
+  width: 100%;
 }
 
 .carousel-item img {
@@ -462,6 +452,7 @@
 #header-carousel .carousel-inner,
 #header-carousel .carousel-item {
     height: 100vh;
+    width: 100%;
 }
 
 .carousel-bg {
@@ -473,11 +464,13 @@
 
 .hero-section {
   height: 108vh;
+  width: 100%;
   background-size: cover;
   background-position: center;
   display: flex;
-  align-items: flex-start;   /* ALT DEĞİL */
-  padding-top: 160px;        /* ÜSTTEN YOĞUNLUK */
+  align-items: center;  /* İçeriği dikeyde ortalar */
+  justify-content: center; /* İçeriği yatayda ortalar */
+  padding-top: 80px;
 }
 
 .hero-img {
@@ -485,10 +478,14 @@
   height: 108vh;
   object-fit: cover;
 }
+
 .hero-content {
   position: relative;
-  top: 45%;
-  transform: translateY(-50%);
+  width: 100%;
+  max-width: 1200px; /* İçeriğin çok yayılmasını önler */
+  margin: 0 auto;    /* Sayfayı ortalar */
+  text-align: center;
+  z-index: 5;
 }
 
 
@@ -509,7 +506,7 @@
 }
 
 .slide {
-    flex: 0 0 20%; /* ⬅️ 5 LOGO */
+    flex: 0 0 20%; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -556,11 +553,6 @@
     transform: scale(1.05);
 }
 
-/* ORTADAKİ (AKTİF) LOGO */
-
-.nav-btn.left { left: 15px; }
-.nav-btn.right { right: 15px; }
-
 /* Noktalar */
 .dots {
     text-align: center;
@@ -582,8 +574,9 @@
     background: #333;
     transform: scale(1.2);
 }
+
 .nav-item.dropdown .dropdown-toggle {
-    margin-left: 2px;   /* ok ile yazı arası */
+    margin-left: 2px;
     padding-left: 6px;
 }
 
@@ -625,21 +618,6 @@
     transform: scale(1.15);
 }
 
-/* OKLAR */
-.nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: white;
-    border: none;
-    font-size: 26px;
-    cursor: pointer;
-    z-index: 10;
-}
-
-.nav-btn.left { left: 10px; }
-.nav-btn.right { right: 10px; }
-
 /* DOTS */
 .dots {
     display: flex;
@@ -658,4 +636,106 @@
 
 .dot.active {
     background: var(--primary);
+}
+
+/* ===== CAROUSEL FIX ===== */
+
+#header-carousel {
+    height: 100vh;
+}
+
+#header-carousel .carousel-item {
+    height: 100vh;
+    position: relative;
+}
+
+#header-carousel .carousel-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+#header-carousel .carousel-caption {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+#header-carousel .carousel-caption h1,
+#header-carousel .carousel-caption p {
+    color: #fff;
+}
+
+#header-carousel h1 {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+#header-carousel p {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+
+.carousel-caption {
+    position: absolute;
+    inset: 0;
+    background: rgba(1, 10, 53, 0.75);
+}
+
+.hero-inner {
+    max-width: 1300px;
+    width: 100%;
+    padding: 0 24px;
+}
+
+.hero-title {
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    color: #fff;
+    margin-bottom: 24px;
+}
+
+.hero-text {
+    font-size: 1.25rem;
+    color: #ddd;
+    margin-bottom: 32px;
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-text {
+        font-size: 1.05rem;
+    }
+}
+
+/* FORCE FULL WIDTH CAROUSEL */
+#header-carousel {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+}
+
+#header-carousel .carousel-item,
+#header-carousel .carousel-inner {
+    width: 100% !important;
+}
+
+.container-fluid > #header-carousel {
+    width: 100% !important;
+}
+.carousel-bg {
+    pointer-events: none;
+}
+.carousel-control-prev,
+.carousel-control-next {
+    z-index: 5;
 }
